@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Solr Search Engine</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	 crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src='script.js'></script>
+</head>
+<body class="d-flex flex-column justify-content-center">
+	<h1 class="mx-auto" style="width: 400px">Solr Search Engine</h1>
+	<form>
+		<div class="form-group">
+			<label for="query">Query box</label>
+			<input type="text" class="form-control" id="query" placeholder="Enter search text">
+		</div>
+	</form>
+	<button type="button" id="search" class="mx-auto btn btn-primary">Submit</button>
+</body>
+<table id='result' hidden>
+
+</table>
+</html>
