@@ -15,8 +15,9 @@ app.get('/', (req, res) =>
 	res.sendFile('index.html')
 );
 app.get('/search/', (req, res) => {
-	client.search(client.query().q(req.query.text).rows(20))
-		.then(data => res.send(data))
+	client.search("q=" + req.query.text + "&fl=" + req.query.fl)
+		.then(data => {
+			res.send(data)})
 		.catch(err => res.send("404"));
 })
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
