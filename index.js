@@ -15,7 +15,7 @@ app.get('/', (req, res) =>
 	res.sendFile('index.html')
 );
 app.get('/search/', (req, res) => {
-	client.search("q=" + req.query.text + "&fl=" + req.query.fl)
+	client.search("q=" + req.query.text + "&fl=" + req.query.fl+ "&sort=" + req.query.sort)
 		.then(data => {
 			res.send(data)})
 		.catch(err => res.send("404"));

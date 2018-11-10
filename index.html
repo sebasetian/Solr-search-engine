@@ -15,6 +15,12 @@
 			<label for="query">Query box</label>
 			<input type="text" class="form-control" id="query" placeholder="Enter search text">
 		</div>
+			<label for="select">Sorted By</label>
+			<select class="form-control col-3" id="select">
+				<option selected value="score">Lucene</option>
+				<option value="pageRankFile">PageRank</option>
+			</select>
+		
 	</form>
 	<button type="button" id="search" class="mx-auto btn btn-primary">Submit</button>
 </body>
