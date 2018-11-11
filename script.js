@@ -20,7 +20,6 @@ $(document).ready(function () {
 					let url = values[values.length-1];
 					if (keys[keys.length-1] !== 'og_url') {
 						url = dict[values[0]];
-						console.log(url);
 					}
 					content += '<tr style="width:100vw"><td style="width:20vw">Key</td><td>Value<td></tr>';
 					for (let j = 0; j < keys.length; j++) {
