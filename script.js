@@ -2,7 +2,6 @@ let dict = {};
 let isTrainFinished = false;
 let data = [];
 $(document).ready(function () {
-	
 	$.ajax({
 		type: "GET",
 		url: "URLtoHTML_mercury.csv",
@@ -90,16 +89,19 @@ function doQuery(correctedStr, isCorrected, correctArr, words) {
 					if (keys[keys.length - 1] !== 'og_url') {
 						url = dict[values[0]];
 					}
-					content += '<tr style="width:100vw"><td style="width:20vw">Key</td><td>Value<td></tr>';
-					for (let j = 0; j < keys.length; j++) {
-						if (keys[j] == "title" || keys[j] == 'og_url') {
-							content += '<tr style="width:100vw"><td style="width:20vw">' + keys[j] + '</td><td><a href=\"' + url + '\">' + values[j] + '</a><td></tr>';
-						} else {
-							content += '<tr style="width:100vw"><td style="width:20vw">' + keys[j] + '</td><td>' + values[j] + '<td></tr>';
+					$.get('/snippet?path=' + values[0] + '&query=' + correctedStr, (data) => {
+						content += '<tr style="width:100vw"><td style="width:20vw">Key</td><td>Value<td></tr>';
+						for (let j = 0; j < keys.length; j++) {
+
+							if (keys[j] == "title" || keys[j] == 'og_url') {
+								content += '<tr style="width:100vw"><td style="width:20vw">' + keys[j] + '</td><td><a href=\"' + url + '\">' + values[j] + '</a><td></tr>';
+							} else {
+								content += '<tr style="width:100vw"><td style="width:20vw">' + keys[j] + '</td><td>' + values[j] + '<td></tr>';
+							}
 						}
-					}
-					content += "</table><br>";
-					$('#result').append(content);
+						content += "</table><br>";
+						$('#result').append(content);
+					});
 				}
 			} else {
 				$('#result').append("<h5>No Record</h5>");
@@ -112,7 +114,6 @@ function processData(allText) {
 	for (let i = 1; i < allTextLines.length; i++) {
 		let data = allTextLines[i].split(',');
 		if (data.length == 2)
-			dict["/Users/seb/solr-7.5.0/mercurynews/" + data[0]] = data[1];
+			dict["/Users/seb/CSCI572Solr/solr-7.5.0/mercurynews/" + data[0]] = data[1];
 	}
-	
 }

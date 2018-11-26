@@ -20,6 +20,7 @@
     "popper.js": "^1.14.4",
     "sessionstorage": "^0.1.0",
     "solr-node": "^1.0.14",
-    "spell": "^1.0.0"
+    "spell": "^1.0.0",
+    "textract": "^2.4.0"
   }
 }

@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 const axios = require('axios');
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4200;
 const solrNode = require("solr-node");
 const spell = require('spell');
 const dict = spell();
 const fs = require('fs');
+const textract = require('textract');
 const client = new solrNode({
 	host: '127.0.0.1',
 	port: '8983',
@@ -46,5 +47,12 @@ app.get('/suggest/', (req,res) => {
 		}
 	})
 	.catch(err => res.sendStatus(500));
-})
+});
+app.get('/snippet/', (req,res) => {
+	textract.fromFileWithMimeAndPath("text/html",req.query.path,(error,text) => {
+		let querys = req.query.q;
+		let wordArr = querys.split(" ");
+		res.send("");
+	})
+});
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
