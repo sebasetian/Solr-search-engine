@@ -1,6 +1,8 @@
 let dict = {};
 let isTrainFinished = false;
+let data = [];
 $(document).ready(function () {
+	
 	$.ajax({
 		type: "GET",
 		url: "URLtoHTML_mercury.csv",
@@ -11,11 +13,15 @@ $(document).ready(function () {
 			console.log(error);
 		}
 	});
-	$.get('/load-dict/',function () {
-		alert("Everything is set up. You can search now.");
-		
-	});
-	$("button").click(function () {
+	$('#query').autoComplete({
+		minChars:2,
+		source: function(term,response) {
+			$.getJSON('/suggest?word=' + term, function (data) {
+				response(data);
+			});
+		}
+	})
+	$("#search").click(function () {
 		onSubmit(true, null);
 	});
 });
