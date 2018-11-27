@@ -21,6 +21,7 @@
     "sessionstorage": "^0.1.0",
     "solr-node": "^1.0.14",
     "spell": "^1.0.0",
-    "textract": "^2.4.0"
+    "textract": "^2.4.0",
+    "unfluff": "^3.2.0"
   }
 }

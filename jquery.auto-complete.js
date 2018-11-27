@@ -92,7 +92,7 @@
             if (!o.minChars) that.on('focus.autocomplete', function(){ that.last_val = '\n'; that.trigger('keyup.autocomplete'); });
 
             function suggest(data){
-                var val = that.val();
+				var val = that.val();
                 that.cache[val] = data;
                 if (data.length && val.length >= o.minChars) {
                     var s = '';
@@ -130,16 +130,18 @@
 
             that.on('keyup.autocomplete', function(e){
                 if (!~$.inArray(e.which, [13, 27, 35, 36, 37, 38, 39, 40])) {
-                    var val = that.val();
+					var val = that.val();
                     if (val.length >= o.minChars) {
                         if (val != that.last_val) {
-                            that.last_val = val;
+							that.last_val = val;
+							var vals = val.split(" ");
+							if (vals.length > 1 && vals[vals.length - 1] != "") val = vals[vals.length - 1];
                             clearTimeout(that.timer);
                             if (o.cache) {
                                 if (val in that.cache) { suggest(that.cache[val]); return; }
-                                // no requests if previous suggestions were empty
+								// no requests if previous suggestions were empty
                                 for (var i=1; i<val.length-o.minChars; i++) {
-                                    var part = val.slice(0, val.length-i);
+									var part = val.slice(0, val.length-i);
                                     if (part in that.cache && !that.cache[part].length) { suggest([]); return; }
                                 }
                             }
