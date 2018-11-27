@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 });
 app.get('/correct/', (req,res) => {
 	let correctedwords = dict.suggest(req.query.word.toLowerCase());
-	if (!correctedwords || !correctedwords[0].hasOwnProperty("word")) {
+	if (!correctedwords || correctedwords.length == 0 || !correctedwords[0].hasOwnProperty("word")) {
 		 res.send("");
 	}
 	else {

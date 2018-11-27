@@ -58,7 +58,9 @@ function onSubmit(isCorrectNeed,text) {
 		}
 }
 function doQuery(correctedStr, isCorrected, correctArr, words) {
-		$.get('/search?fl=id,title,og_description,og_url&text=' + correctedStr + '&sort=' + $('#select').val() + ' desc', data => {
+	$('#result').empty();
+	$('#result').append('<h4 style="width:100vw;text-align:center;padding-top:10vh">Loading...</h4>');
+	$.get('/search?fl=id,title,og_description,og_url&text=' + words + '&sort=' + $('#select').val() + ' desc', data => {
 			$('#result').removeAttr('hidden');
 			let items = data.response.docs;
 			if (items.length != 0) {
@@ -93,22 +95,27 @@ function doQuery(correctedStr, isCorrected, correctArr, words) {
 									$('#query').val(correctedStr);
 									doQuery($('#query').val(), false, correctArr, words);
 								});
-								$('#originText').click(function () {
-									doQuery($('#query').val(), false, correctArr, words);
-								});
 							}
 							tables.forEach(content => $('#result').append(content));
 						}
 					});
 				}
 			} else {
-				$('#result').append("<h5>No Record</h5>");
+				$('#result').empty();
+				if (isCorrected) {
+					$('#result').append(appendCorrectText(words, correctArr));
+					$('#correctText').click(function () {
+						$('#query').val(correctedStr);
+						doQuery($('#query').val(), false, correctArr, correctedStr);
+					});
+				}
+				$('#result').append('<h5 style="width:100vw;text-align:center;padding-top:10vh">No Record</h5>');
 			}
 		});
 	} 
 }
 function appendCorrectText(words, correctArr) {
-	let showText = "<p style='font-size:120%'>Showing results for <a href='#' id='correctText'>";
+	let showText = "<p style='font-size:120%;width:100vw;text-align:center;'>Did you mean <a href='#' id='correctText'>";
 	words.forEach(word => {
 		if (correctArr[word] != word) {
 			showText += "<em>" + correctArr[word] + "</em> ";
@@ -116,7 +123,6 @@ function appendCorrectText(words, correctArr) {
 			showText += word + " ";
 		}
 	});
-	showText += "</a></p><br>Search instead for <a href='#' id='originText'>" + $('#query').val() + "</a>";
 	return showText;
 }
 function processData(allText) {
