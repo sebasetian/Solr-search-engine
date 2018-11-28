@@ -93,10 +93,14 @@
 
             function suggest(data){
 				var val = that.val();
-                that.cache[val] = data;
+				let vals = val.split(" ");
+				if (vals.length > 1 && vals[vals.length - 1] != " ") val = vals[vals.length - 1];
+				let otherStr = ""
+				for (let j = 0; j < vals.length - 1; j++) otherStr += vals[j]
+				that.cache[val] = data;
                 if (data.length && val.length >= o.minChars) {
                     var s = '';
-                    for (var i=0;i<data.length;i++) s += o.renderItem(data[i], val);
+					for (var i = 0; i < data.length; i++) s += o.renderItem(otherStr + " " + data[i], val);
                     that.sc.html(s);
                     that.updateSC(0);
                 }
@@ -134,18 +138,22 @@
                     if (val.length >= o.minChars) {
                         if (val != that.last_val) {
 							that.last_val = val;
-							var vals = val.split(" ");
-							if (vals.length > 1 && vals[vals.length - 1] != "") val = vals[vals.length - 1];
+							let vals = val.split(" ");
+							//for (let j = 0; j < vals.length - 1; j++) otherStr += vals[j]
+							//if (vals.length > 1 && vals[vals.length - 1] != " ") val = vals[vals.length - 1];
                             clearTimeout(that.timer);
                             if (o.cache) {
-                                if (val in that.cache) { suggest(that.cache[val]); return; }
+								if (val in that.cache) { suggest(val); return; }
 								// no requests if previous suggestions were empty
+								let vals = val.split(" ");
+							//for (let j = 0; j < vals.length - 1; j++) otherStr += vals[j]
+							if (vals.length > 1 && vals[vals.length - 1] != " ") val = vals[vals.length - 1];
                                 for (var i=1; i<val.length-o.minChars; i++) {
 									var part = val.slice(0, val.length-i);
-                                    if (part in that.cache && !that.cache[part].length) { suggest([]); return; }
+									if (part in that.cache && !that.cache[part].length) { suggest([]); return; }
                                 }
                             }
-                            that.timer = setTimeout(function(){ o.source(val, suggest) }, o.delay);
+							that.timer = setTimeout(function () { o.source(val, suggest) }, o.delay);
                         }
                     } else {
                         that.last_val = val;
