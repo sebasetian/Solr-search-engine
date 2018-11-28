@@ -13,7 +13,7 @@ $(document).ready(function () {
 		}
 	});
 	$('#query').autoComplete({
-		minChars:2,
+		minChars:1,
 		source: function(term,response) {
 			console.log(term);
 			let terms = $('#query').val().split(" ");
